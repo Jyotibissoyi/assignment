@@ -3,8 +3,6 @@ const {default :mongoose}=require("mongoose")
 const route=require("./routes/route.js")
 const app= express()
 
-
-
 app.use(express.json());
 
 
@@ -17,7 +15,11 @@ mongoose.connect("mongodb+srv://Jyoticoder:Jyoti2025@jyoticoder-cluster.ljxxb2x.
 
 app.use('/', route);
 
-app.listen(3000, function () {
+
+
+
+
+app.listen(3000,  ()=> {
     console.log("server running" + 3000)
 });
 
