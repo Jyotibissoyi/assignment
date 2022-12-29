@@ -111,7 +111,7 @@ const createCart = async function (req, res)  {
                 let totalPrice = quantity * Price
 
                 //===================== Pushing the Object into items Arr =====================//
-               arr.push({ productId: productId, quantity: quantity })
+               //arr.push({ productId: productId, quantity: quantity })
                 
                 //===================== Create a object for Create Cart =====================//
                 let obj = {

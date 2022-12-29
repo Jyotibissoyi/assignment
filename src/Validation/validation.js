@@ -37,10 +37,7 @@ const validPhone=function(phone){
 
 //----------------------Validation for Image---------------------------------------------//
 
-const validImage =function(value){
-    const imageRegex= /^\.(gif|jpe?g|tiff?|png|webp|bmp)$/ 
-    return imageRegex.test(value)
-}
+const validImage = (value) => { return (/\.(gif|jpe?g|tiff?|png|webp|bmp)$/).test(value) }
 
 //-------------------------Validation for pincode-----------------------------------------//
 

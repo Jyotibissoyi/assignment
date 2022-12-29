@@ -16,7 +16,7 @@ router.get("/products",filterProduct)
 router.get("/products/:productId",productsById)
 router.put("/products/:productId",updateProducts)
 router.delete("/products/:productId",deleteProductById)
-router.put("/users/:userId/cart",updateCart)
+
 router.post("/users/:userId/cart",authenticate,authorize,createCart)
 router.put("/users/:userId/cart",authenticate,authorize,updateCart)
 router.get("/users/:userId/cart",authenticate,authorize,getCart)

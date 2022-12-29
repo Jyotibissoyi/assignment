@@ -31,12 +31,12 @@ const createProduct = async (req, res) => {
 
         //===================== Validation of Price =====================//
         if (!isValid(price)) return res.status(400).send({ status: false, message: "Please enter price!" });
-        if (!isValidPrice(price)) return res.status(400).send({ status: false, message: "Please valid valid price In Body!" });
+        if (!isValidPrice(price)) return res.status(400).send({ status: false, message: "Please valid price In Body!" });
         obj.price = price
 
         //===================== Validation of CurrencyId =====================//
         if (currencyId || currencyId == '') {
-            if (!validator.isValidBody(currencyId)) return res.status(400).send({ status: false, message: "Please enter CurrencyId!" });
+            if (!isValid(currencyId)) return res.status(400).send({ status: false, message: "Please enter CurrencyId!" });
             if (currencyId != 'INR') return res.status(400).send({ status: false, message: "CurrencyId must be 'INR'!" });
             obj.currencyId = currencyId
         }
@@ -90,7 +90,7 @@ const createProduct = async (req, res) => {
         //===================== Checking the ProductImage is present or not and Validate the ProductImage =====================//
         if (files && files.length > 0) {
             if (files.length > 1) return res.status(400).send({ status: false, message: "You can't enter more than one file for Create!" })
-            if (!validImage(files[0]['originalname'])) { return res.status(400).send({ status: false, message: "You have to put only Image." }) }
+           if (!validImage(files[0]['originalname'])) { return res.status(400).send({ status: false, message: "You have to put only Image." }) }
             let uploadedFileURL = await uploadFile(files[0])
             obj.productImage = uploadedFileURL
         } else {
@@ -316,7 +316,7 @@ const deleteProductById = async function (req, res) {
         if (!productId) { return res.status(400).send({ status: false, message: "please give productId in requesst params" }) }
         if (!isValidObjectIds(productId)) { return res.status(400).send({ status: false, message: "please enter productId in valid format" }) }
         let findData = await productModel.findOneAndUpdate({ _id: productId, isDeleted: false }, { isDeleted: true, deletedAt: Date.now() })
-        if (!findData) { return res.status(200).send({ status: true, message: `product not found by this [${productId}] productId` }) }
+        if (!findData) { return res.status(404).send({ status: true, message: `product not found by this [${productId}] productId` }) }
         return res.status(200).send({ status: false, message: "data deleted successfully", data: findData })
 
     } catch (error) { res.status(500).send({ status: false, message: error.message }) }

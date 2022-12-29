@@ -1,6 +1,6 @@
 const userModel = require("../model/userModel.js")
 const jwt = require('jsonwebtoken')
-const { isValidInstallment,validName, isValid, validEmail, isValidPassword, validPhone, validImage, isValidPincode, isValidObjectIds, isValidStreet } = require("../validation/validation")
+const { validName, isValid, validEmail, isValidPassword, validPhone, validImage, isValidPincode, isValidObjectIds, isValidStreet } = require("../validation/validation")
 const { uploadFile } = require('../aws/aws.js')
 const bcrypt = require("bcrypt")
 
@@ -125,7 +125,7 @@ const loginUser = async function (req, res) {
         //-------------------------------------------Decrypt the password and compare the password with user input------------------------------------------//
         bcrypt.compare(password, verifyUser.password, function (error, verifyUser) {
             if (error) return res.status(400).send({ status: false, message: error.message })
-            //    else verifyUser == true
+          else verifyUser == true
         });
 
 
@@ -169,9 +169,9 @@ const getUser = async function(req, res)  {
 const updateUser = async function (req, res) {
     try {
         let userId = req.params.userId;
-        const data = req.body;
+        let  data = req.body;
         if (Object.keys(data).length == 0) {
-            return res.status(400).send({ status: false, message: "Insert Data : BAD REQUEST" });
+            return res.status(400).send({ status: false, message: "give the data you want to update" });
         }
 
         let { fname, lname, email, phone, password } = data;
@@ -180,7 +180,7 @@ const updateUser = async function (req, res) {
                 return res.status(400).send({ status: false, message: "Please Provide first name" });
             }
             if (!validName(fname)) {
-                return res.status(400).send({ status: false, msg: "Invalid fname" });
+                return res.status(400).send({ status: false, msg: "fName should be in allphabet" });
             }
         }
 
@@ -189,7 +189,7 @@ const updateUser = async function (req, res) {
                 return res.status(400).send({ status: false, msg: "Please Provide last name" });
             }
             if (!validName(lname)) {
-                return res.status(400).send({ status: false, msg: "Invalid lname" });
+                return res.status(400).send({ status: false, msg: "Please provide last name in alphabet" });
             }
         }
 
@@ -199,8 +199,7 @@ const updateUser = async function (req, res) {
             }
 
             if (!validEmail(email)) {
-                return res
-                    .status(400).send({ status: false, message: "Provide a valid email id" });
+                return res .status(400).send({ status: false, message: "Provide a valid email id" });
             }
             const checkEmail = await userModel.findOne({ email: email });
             if (checkEmail) {
